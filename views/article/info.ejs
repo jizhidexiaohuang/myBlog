@@ -1,0 +1,31 @@
+<%- include('../layout/header.ejs') %>
+
+  <link rel="stylesheet" type="text/css" href="/node_modules/mditor/dist/css/mditor.min.css" />
+  <script src="/node_modules/mditor/dist/js/mditor.min.js"></script>
+
+  <!--发表文章-->
+  <div class="container-fluid">
+    <div class="clearfix">
+      <h2>标题：<%= article.title %></h2>
+      <% if(islogin && user.id === article.authorId){ %>
+      <a href="/article/edit?id=<%= article.id%>" class="btn btn-primary pull-right">编辑</a>
+      <% } %>
+      <p style="color:#999;">
+        <strong>作者昵称:</strong><%= article.nickname %>
+        <strong>发表时间:</strong><%= article.ctime %>
+      </p>
+    </div>
+
+    <div class="content">
+      <%- article.content %>
+    </div>
+  </div>
+
+  <%- include('../layout/footer.ejs') %>
+
+
+    <script>
+      $(function () {
+
+      })
+    </script>

@@ -1,66 +1,35 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
+<%- include('./layout/header.ejs') %>
 
-<head>
-  <meta charset="UTF-8">
-  <title>title</title>
-  <link rel="stylesheet" type="text/css" href="/node_modules/bootstrap/dist/css/bootstrap.min.css" />
-  <script src="/node_modules/jquery/dist/jquery.min.js"></script>
-  <script src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-</head>
+  <!--列表-->
+  <div class="container-fluid">
+    <ul class="list-group">
+      <% list.forEach(item=>{ %>
+        <li class="list-group-item"><a href="/article/info?id=<%= item.id %>"><%= item.title %></a></li>
+      <% }) %>
+      
+    </ul>
+ 
 
-<body>
-  <!--导航条-->
-  <nav class="navbar navbar-default">
-    <div class="container-fluid">
-      <!-- Brand and toggle get grouped for better mobile display -->
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
-          aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-        <a class="navbar-brand" href="#">MyBlog</a>
-      </div>
+  <!--分页器-->
+  <nav aria-label="Page navigation">
+    <ul class="pagination">
+      <li>
+        <a href="/?page=<%= nowPage == 1?1: nowPage-1 %>" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+      </li>
 
-      <!-- Collect the nav links, forms, and other content for toggling -->
-      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <% for(var i = 0;i < totalCount; i++){ %>
+        <li class="<%= nowPage == (i+1)?'active':'' %>"><a href="/?page=<%= (i+1) %>"><%= i+1 %></a></li>
+      <% } %>
 
-        <% if(!islogin){ %>
-          <div class="navbar-form navbar-right">
-            <a href="/register" class="btn btn-primary">注册</a>
-            <a href="/login" class="btn btn-success">登录</a>
-          </div>
-        <% }else{ %>
-          <div class="navbar-form navbar-right">
-            <a href="#" class="btn btn-warning">欢迎<strong><%= user.nickname %></strong></a>
-            <a href="/logout" class="btn btn-danger">注销</a>
-          </div>
-        <% } %>
-    
-        <ul class="nav navbar-nav navbar-right">
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">发表 <span class="caret"></span></a>
-            <ul class="dropdown-menu">
-              <li><a href="#">文章</a></li>
-              <li><a href="#">问题</a></li>
-            </ul>
-          </li>
-        </ul>
-      </div>
-      <!-- /.navbar-collapse -->
-    </div>
-    <!-- /.container-fluid -->
+      <li>
+        <a href="/?page=<%= nowPage == totalCount?totalCount: nowPage+1 %>" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+      </li>
+    </ul>
   </nav>
+ </div>
 
-  <!--内容-->
-  <h1>首页内容</h1>
-
-  <!--footer-->
-  <div style="color:#999;text-align:center;"><p>我的博客 @ 2017</p></div>
-</body>
-
-</html>
-
+  <%- include('./layout/footer.ejs') %>
